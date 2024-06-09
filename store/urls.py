@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 # Импорт файла settings правильно делать так, чтобы подтянулись все внутренние настройки
 from django.conf import settings
 
-from products.views import index, products
+from products.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
 
     # apps
     path('products/', include('products.urls', namespace='products')),
+    path('user/', include('users.urls', namespace='users'))
 ]
 
 if settings.DEBUG:
