@@ -1,7 +1,8 @@
+from icecream import ic
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse  # Поможет использовать ссылки по их name -> Адрес
-from icecream import ic
+from django.contrib.auth.decorators import login_required
 
 from products.models import Basket
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
@@ -42,6 +43,7 @@ def registration(request):
     return render(request, 'users/registration.html', context)
 
 
+@login_required
 def profile(request):
     """Profile controller"""
     if request.method == 'POST':

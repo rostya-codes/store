@@ -1,8 +1,7 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from products.models import ProductCategory, Product, Basket
-from users.models import User
 
 
 def handling_404(request, exception):
@@ -25,6 +24,7 @@ def products(request):
     return render(request, 'products/products.html', context)
 
 
+@login_required
 def basket_add(request, product_id):
     """Basket add controller"""
     product = Product.objects.get(id=product_id)
@@ -39,6 +39,7 @@ def basket_add(request, product_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])  # Та страница на которой находится пользователь
 
 
+@login_required
 def basket_remove(request, basket_id):
     """Basket remove controller"""
     basket = Basket.objects.get(id=basket_id)
