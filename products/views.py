@@ -5,6 +5,10 @@ from products.models import ProductCategory, Product, Basket
 from users.models import User
 
 
+def handling_404(request, exception):
+    return render(request, '404.html', {})
+
+
 def index(request):
     """Products index controller"""
     context = {'title': 'Store'}

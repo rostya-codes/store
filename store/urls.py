@@ -22,6 +22,8 @@ from django.conf import settings
 
 from products.views import index
 
+handler404 = 'products.views.handling_404'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),  # Main page
