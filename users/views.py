@@ -61,5 +61,6 @@ def profile(request):
 
 
 def logout(request):
+    """Logout controller"""
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
