@@ -52,6 +52,7 @@ def profile(request):
         else:
             ic(f'Error: {form.errors}')  # Лог ошибки формы
     form = UserProfileForm(instance=request.user)  # Подгрузка дефолтных данных профиля для отображения
+
     context = {
         'title': 'Store - Профиль',
         'form': form,
