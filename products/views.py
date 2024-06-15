@@ -37,3 +37,10 @@ def basket_add(request, product_id):
         basket.quantity += 1
         basket.save()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])  # Та страница на которой находится пользователь
+
+
+def basket_remove(request, basket_id):
+    """Basket remove controller"""
+    basket = Basket.objects.get(id=basket_id)
+    basket.delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
