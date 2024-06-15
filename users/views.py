@@ -3,7 +3,7 @@ from django.contrib import auth, messages
 from django.urls import reverse  # Поможет использовать ссылки по их name -> Адрес
 from icecream import ic
 
-from users.models import User
+from products.models import Basket
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 
@@ -52,7 +52,11 @@ def profile(request):
         else:
             ic(f'Error: {form.errors}')  # Лог ошибки формы
     form = UserProfileForm(instance=request.user)  # Подгрузка дефолтных данных профиля для отображения
-    context = {'title': 'Store - Профиль', 'form': form}
+    context = {
+        'title': 'Store - Профиль',
+        'form': form,
+        'baskets': Basket.objects.all()
+    }
     return render(request, 'users/profile.html', context)
 
 
