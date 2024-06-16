@@ -6,11 +6,6 @@ from django.views.generic.list import ListView
 from products.models import ProductCategory, Product, Basket
 
 
-def handling_404(request, exception):
-    """404 page handling controller"""
-    return render(request, '404.html', {})
-
-
 class IndexView(TemplateView):
     """ Home page controller """
 
@@ -63,3 +58,8 @@ def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def handling_404(request, exception):
+    """404 page handling controller"""
+    return render(request, '404.html', {})
