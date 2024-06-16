@@ -20,13 +20,13 @@ from django.conf.urls.static import static
 # Импорт файла settings правильно делать так, чтобы подтянулись все внутренние настройки
 from django.conf import settings
 
-from products.views import index
+from products.views import IndexView
 
 handler404 = 'products.views.handling_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),  # Main page
+    path('', IndexView.as_view(extra_context={'title': 'Store'}), name='index'),  # Main page
 
     # apps
     path('products/', include('products.urls', namespace='products')),
