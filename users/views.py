@@ -1,32 +1,18 @@
-from icecream import ic
-from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import auth, messages
-from django.urls import reverse, reverse_lazy  # Поможет использовать ссылки по их name -> Адрес
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy  # Поможет использовать ссылки по их name -> Адрес
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.views import LoginView
 
 from products.models import Basket
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from users.models import User
 
 
-def login(request):
-    """Login controller"""
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)  # Если пользователь есть - он авторизуется
-                return HttpResponseRedirect(reverse('index'))
-        else:
-            ic(f'Error: {form.errors}')  # Лог ошибки формы
-    else:
-        form = UserLoginForm()
-    context = {'form': form}
-    return render(request, 'users/login.html', context)
+class UserLoginView(LoginView):
+    """ UserLoginView controller """
+
+    template_name = 'users/login.html'
+    form_class = UserLoginForm
+    success_url = reverse_lazy('index')
 
 
 class UserRegistrationView(CreateView):
@@ -95,10 +81,3 @@ class UserProfileView(UpdateView):
 #         form = UserRegistrationForm()
 #     context = {'form': form}
 #     return render(request, 'users/registration.html', context)
-
-
-
-def logout(request):
-    """Logout controller"""
-    auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
