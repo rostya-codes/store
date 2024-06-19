@@ -4,26 +4,23 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from products.models import ProductCategory, Product, Basket
+from common.views import TitleMixin
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     """ Home page controller """
 
     template_name = 'products/index.html'
-
-    def get_context_data(self, **kwargs):
-        """Returns context data"""
-        context = super(IndexView, self).get_context_data()
-        context['title'] = 'Store'
-        return context
+    title = 'Store'
 
 
-class ProductsListView(ListView):
+class ProductsListView(TitleMixin, ListView):
     """ Products page controller """
 
     model = Product  # Определяется тут, а не в get_context_data
     template_name = 'products/products.html'
     paginate_by = 3
+    title = 'Store - Каталог'
 
     def get_queryset(self):
         queryset = super(ProductsListView, self).get_queryset()
@@ -32,7 +29,6 @@ class ProductsListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductsListView, self).get_context_data()
-        context['title'] = 'Store - Каталог'
         context['categories'] = ProductCategory.objects.all()
         return context
 
@@ -58,8 +54,3 @@ def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-
-def handling_404(request, exception):
-    """404 page handling controller"""
-    return render(request, '404.html', {})

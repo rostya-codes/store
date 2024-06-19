@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # Полный путь к п
 SECRET_KEY = SECRET_KEY  # Обеспечивает целостность передачи данных
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # Режим разработки
+DEBUG = False  # Режим разработки
 
 ALLOWED_HOSTS = ['*']  # Доступные хосты
 

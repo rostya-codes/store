@@ -22,7 +22,7 @@ from django.conf import settings
 
 from products.views import IndexView
 
-handler404 = 'products.views.handling_404'
+handler404 = 'common.views.handling_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),

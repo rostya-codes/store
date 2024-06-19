@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 
-from users.views import UserLoginView, UserRegistrationView, UserProfileView, logout  # Controllers
+from users.views import UserLoginView, UserRegistrationView, UserProfileView  # Controllers
 
 app_name = 'users'  # App name
 

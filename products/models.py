@@ -47,7 +47,6 @@ class BasketQuerySet(models.QuerySet):
         return sum(basket.quantity for basket in self)
 
 
-
 class Basket(models.Model):
     """ Basket model """
 
