@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # Полный путь к п
 SECRET_KEY = SECRET_KEY  # Обеспечивает целостность передачи данных
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Режим разработки
+DEBUG = True  # Режим разработки
 
 ALLOWED_HOSTS = ['*']  # Доступные хосты
 
@@ -146,3 +146,7 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Sending emails
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
