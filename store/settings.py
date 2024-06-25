@@ -30,6 +30,7 @@ DEBUG = True  # Режим разработки
 
 ALLOWED_HOSTS = ['*']  # Доступные хосты
 
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 
 # Application definition
 
@@ -149,4 +150,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Sending emails
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
