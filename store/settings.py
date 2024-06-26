@@ -9,11 +9,11 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import logging
 import os
 from pathlib import Path
 
-from config import SECRET_KEY
+from config import SECRET_KEY, EMAIL_HOST_PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent  # Полный путь к проекту
@@ -150,4 +150,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Sending emails
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'rostyamudrik@ya.ru'
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_USE_SSL = True
