@@ -13,7 +13,7 @@ import logging
 import os
 from pathlib import Path
 
-from config import SECRET_KEY, EMAIL_HOST_PASSWORD
+from config import EMAIL_HOST_PASSWORD, SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent  # Полный путь к проекту
@@ -70,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # my context_processors
+                'products.context_processors.baskets'
             ],
         },
     },
