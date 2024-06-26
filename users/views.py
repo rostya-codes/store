@@ -7,7 +7,6 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from common.views import TitleMixin
-from products.models import Basket
 from users.forms import UserLoginForm, UserProfileForm, UserRegistrationForm
 from users.models import EmailVerification, User
 

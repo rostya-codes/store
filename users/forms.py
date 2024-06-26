@@ -42,7 +42,6 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
 
-
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=True)
         expiration = now() + timedelta(hours=48)
