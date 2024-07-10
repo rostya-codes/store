@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     # my apps
     'products',
     'orders',
-    'users'
+    'users',
+    # other
+    'debug_toolbar',
 ]
 
 # Промежуточные слои
@@ -62,6 +64,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost'
 ]
 
 ROOT_URLCONF = 'store.urls'
