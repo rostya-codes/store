@@ -30,7 +30,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     # apps
     path('products/', include('products.urls', namespace='products')),
-    path('users/', include('users.urls', namespace='users'))
+    path('users/', include('users.urls', namespace='users')),
+    path('orders/', include('orders.urls', namespace='orders'))
 ]
 
 if settings.DEBUG:

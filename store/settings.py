@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     # my apps
     'products',
+    'orders',
     'users'
 ]
 
