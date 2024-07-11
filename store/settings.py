@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 from config import (EMAIL_HOST_PASSWORD, SECRET_KEY, STRIPE_PUBLIC_KEY,
-                    STRIPE_SECRET_KEY)
+                    STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent  # Полный путь к проекту
@@ -27,6 +27,8 @@ SECRET_KEY = SECRET_KEY  # Обеспечивает целостность пе�
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # Режим разработки
+
+APPEND_SLASH = False
 
 ALLOWED_HOSTS = ['*']  # Доступные хосты
 
@@ -212,3 +214,4 @@ CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 
 STRIPE_PUBLIC_KEY = STRIPE_PUBLIC_KEY
 STRIPE_SECRET_KEY = STRIPE_SECRET_KEY
+STRIPE_WEBHOOK_SECRET = STRIPE_WEBHOOK_SECRET

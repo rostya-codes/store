@@ -2,15 +2,17 @@ from http import HTTPStatus
 
 import stripe
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
+from django.views.decorators.csrf import csrf_exempt
 
 from common.views import TitleMixin
 from orders.forms import OrderForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 
 class SuccessTemplateView(TitleMixin, TemplateView):
@@ -39,6 +41,7 @@ class OrderCreateView(TitleMixin, CreateView):
                     'quantity': 1,
                 },
             ],
+            metadata={'order_id': self.object.id},
             mode='payment',
             success_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_success')),
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_cancel')),
@@ -48,3 +51,52 @@ class OrderCreateView(TitleMixin, CreateView):
     def form_valid(self, form):
         form.instance.initiator = self.request.user
         return super(OrderCreateView, self).form_valid(form)
+
+
+@csrf_exempt
+def stripe_webhook_view(request):
+    """The stripe_webhook_view function handles Stripe webhooks and executes fulfill_checkout for specific events"""
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    if event['type'] == 'checkout.session.completed' or event['type'] == 'checkout.session.async_payment_succeeded':
+        fulfill_checkout(event['data']['object']['id'])
+
+    return HttpResponse(status=200)
+
+
+def fulfill_checkout(session_id):
+    """Fulfill checkout order stripe func"""
+    order_id = int(session_id.metadata.order_id)
+    print("Fulfilling Checkout Session", session_id)
+
+    # TODO: Make this function safe to run multiple times,
+    # even concurrently, with the same session ID
+
+    # TODO: Make sure fulfillment hasn't already been
+    # Performed for this Checkout Session
+
+    # Retrieve the Checkout Session from the API with line_items expanded
+    checkout_session = stripe.checkout.Session.retrieve(
+        session_id,
+        expand=['line_items']
+    )
+
+    if checkout_session.payment_status != 'unpaid':
+        pass
+        # TODO: Perform fulfillment of the line items
+
+        # TODO: Record/save fulfillment status for this
+        # Checkout Session
