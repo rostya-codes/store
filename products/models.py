@@ -98,6 +98,6 @@ class Basket(models.Model):
             'product_name': self.product.name,
             'quantity': self.quantity,
             'price': float(self.product.price),
-            'sum': float(self.sum())
+            'sum': float(self.sum()),
         }
         return basket_item

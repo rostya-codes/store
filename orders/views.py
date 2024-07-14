@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, logger
 from django.views.generic.edit import CreateView
 from icecream import ic
 
@@ -70,6 +70,9 @@ def stripe_webhook_view(request):
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
         return HttpResponse(status=400)
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        return HttpResponse(status=500)
 
     if event['type'] == 'checkout.session.completed' or event['type'] == 'checkout.session.async_payment_succeeded':
         fulfill_checkout(event['data']['object']['id'])
@@ -79,7 +82,12 @@ def stripe_webhook_view(request):
 
 def fulfill_checkout(session_id):
     """Fulfill checkout order stripe func"""
-    order_id = int(session_id.metadata.order_id)
+    # Retrieve the Checkout Session from the API
+    checkout_session = stripe.checkout.Session.retrieve(session_id)
+
+    # Retrieve the order_id from the metadata
+    order_id = int(checkout_session.metadata.order_id)
+
     order = Order.objects.get(id=order_id)
     order.update_after_payment()
 
