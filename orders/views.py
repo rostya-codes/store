@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView, logger
+from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from icecream import ic
 
@@ -25,6 +26,17 @@ class SuccessTemplateView(TitleMixin, TemplateView):
 
 class CanceledTemplateView(TemplateView):
     template_name = 'orders/cancel.html'
+
+
+class OrderListView(TitleMixin, ListView):
+    template_name = 'orders/orders.html'
+    title = 'Store - Заказы'
+    queryset = Order.objects.all()
+    ordering = ('-created')  # Сортировка наоборот
+
+    def get_queryset(self):
+        queryset = super(OrderListView, self).get_queryset()
+        return queryset.filter(initiator=self.request.user)
 
 
 class OrderCreateView(TitleMixin, CreateView):
@@ -55,7 +67,7 @@ class OrderCreateView(TitleMixin, CreateView):
 
 @csrf_exempt
 def stripe_webhook_view(request):
-    """The stripe_webhook_view function handles Stripe webhooks and executes fulfill_checkout for specific events"""
+    """Function handles Stripe webhooks and executes fulfill_checkout for specific events"""
     payload = request.body
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
