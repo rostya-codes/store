@@ -20,6 +20,7 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
+    path('api/', include('api.urls', namespace='api')),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:

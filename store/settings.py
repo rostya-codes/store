@@ -54,7 +54,7 @@ SECRET_KEY = env('SECRET_KEY')  # Обеспечивает целостност�
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')  # Режим разработки
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 ALLOWED_HOSTS = ['*']  # Доступные хосты
 
@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'products',
     'orders',
     'users',
+    'api',
     # other
     'debug_toolbar',
     'django_extensions',
