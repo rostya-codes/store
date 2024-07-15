@@ -12,10 +12,10 @@ djangorestframework==3.14.0
 flake8==5.0.4
 isort==5.10.1
 
-stripe==4.1.0
+stripe==10.3.0
 
-redis==4.3.4
+redis==5.0.7
 django-redis==5.2.0
 celery==5.2.7
 
-psycopg2-binary==2.9.3
+psycopg2-binary==2.9.9

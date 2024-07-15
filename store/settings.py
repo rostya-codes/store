@@ -82,7 +82,8 @@ INSTALLED_APPS = [
     'users',
     # other
     'debug_toolbar',
-    'django_extensions'
+    'django_extensions',
+    'rest_framework',
 ]
 
 # Промежуточные слои
