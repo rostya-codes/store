@@ -1,2 +1,12 @@
 [flake8]
 max-line-length = 120
+
+exclude =
+    .git,
+    __pycache__,
+    .idea,
+    .env,
+    venv,
+    orders/migrations,
+    products/migrations,
+    users/migrations,

@@ -44,7 +44,7 @@ class UserRegistrationViewTestCase(TestCase):
         )
 
     def test_user_registration_post_error(self):
-        user = User.objects.create(username=self.data['username'])
+        User.objects.create(username=self.data['username'])
         response = self.client.post(self.path, self.data)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
