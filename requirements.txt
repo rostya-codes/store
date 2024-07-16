@@ -19,3 +19,5 @@ django-redis==5.2.0
 celery==5.2.7
 
 psycopg2-binary==2.9.9
+
+environ~=1.0

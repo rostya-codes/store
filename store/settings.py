@@ -15,28 +15,28 @@ from pathlib import Path
 
 
 env = environ.Env(
-    DEBUG=(bool),
-    SECRET_KEY=(str),
-    DOMAIN_NAME=(str),
+    DEBUG=bool,
+    SECRET_KEY=str,
+    DOMAIN_NAME=str,
 
-    REDIS_HOST=(str),
-    REDIS_PORT=(str),
+    REDIS_HOST=str,
+    REDIS_PORT=str,
 
-    DATABASE_NAME=(str),
-    DATABASE_USER=(str),
-    DATABASE_PASSWORD=(str),
-    DATABASE_HOST=(str),
-    DATABASE_PORT=(str),
+    DATABASE_NAME=str,
+    DATABASE_USER=str,
+    DATABASE_PASSWORD=str,
+    DATABASE_HOST=str,
+    DATABASE_PORT=str,
 
-    EMAIL_HOST=(str),
-    EMAIL_PORT=(int),
-    EMAIL_HOST_USER=(str),
-    EMAIL_HOST_PASSWORD=(str),
-    EMAIL_USE_SSL=(bool),
+    EMAIL_HOST=str,
+    EMAIL_PORT=int,
+    EMAIL_HOST_USER=str,
+    EMAIL_HOST_PASSWORD=str,
+    EMAIL_USE_SSL=bool,
 
-    STRIPE_PUBLIC_KEY=(str),
-    STRIPE_SECRET_KEY=(str),
-    STRIPE_WEBHOOK_SECRET=(str),
+    STRIPE_PUBLIC_KEY=str,
+    STRIPE_SECRET_KEY=str,
+    STRIPE_WEBHOOK_SECRET=str,
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -54,7 +54,7 @@ SECRET_KEY = env('SECRET_KEY')  # Обеспечивает целостност�
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')  # Режим разработки
 
-APPEND_SLASH = True
+APPEND_SLASH = True  # Добавлять / в конце
 
 ALLOWED_HOSTS = ['*']  # Доступные хосты
 
@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 # Промежуточные слои
@@ -259,7 +260,7 @@ STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 3,
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
