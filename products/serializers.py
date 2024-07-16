@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from products.models import Product
+from products.models import Product, ProductCategory
 
 
 class ProductSerializer(serializers.ModelSerializer):
     """ ProductSerializers model """
 
-    category = serializers.SlugRelatedField(slug_field='name', read_only=True)  # Для отображения названия одежды
+    category = serializers.SlugRelatedField(slug_field='name', queryset=ProductCategory.objects.all())  # Для отображения названия одежды
 
     class Meta:
         model = Product
