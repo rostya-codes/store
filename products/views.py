@@ -39,15 +39,7 @@ class ProductsListView(TitleMixin, ListView):
 @login_required
 def basket_add(request, product_id):
     """Basket add controller"""
-    product = Product.objects.get(id=product_id)
-    baskets = Basket.objects.filter(user=request.user, product=product)
-
-    if not baskets.exists():
-        Basket.objects.create(user=request.user, product=product, quantity=1)
-    else:
-        basket = baskets.first()
-        basket.quantity += 1
-        basket.save()
+    Basket.create_or_update(product_id, request.user)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])  # Та страница на которой находится пользователь
 
 

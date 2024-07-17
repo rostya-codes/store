@@ -1,13 +1,13 @@
-from rest_framework import serializers
-from rest_framework import fields
+from rest_framework import fields, serializers
 
-from products.models import Product, ProductCategory, Basket
+from products.models import Basket, Product, ProductCategory
 
 
 class ProductSerializer(serializers.ModelSerializer):
     """ ProductSerializers model """
 
-    category = serializers.SlugRelatedField(slug_field='name', queryset=ProductCategory.objects.all())  # Для отображения названия одежды
+    # Для отображения названия одежды
+    category = serializers.SlugRelatedField(slug_field='name', queryset=ProductCategory.objects.all())
 
     class Meta:
         model = Product
@@ -19,7 +19,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class BasketSerializer(serializers.ModelSerializer):
 
     product = ProductSerializer()  # Передается полная информация про продукт, а не только id
-    sum = fields.FloatField()
+    sum = fields.FloatField(required=False)
     total_sum = fields.SerializerMethodField()
     total_quantity = fields.SerializerMethodField()
 
